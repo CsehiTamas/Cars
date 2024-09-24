@@ -84,6 +84,24 @@ namespace Cars
 
             conn.Connection.Close();
         }
+        public static void updateCar() {
+            conn.Connection.Open();
+
+            int date, id;
+
+            Console.Write("Kérem az autó azonosítóját: ");
+            id = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Kérem az autó gyártási évét: ");
+            date = Convert.ToInt32(Console.ReadLine());
+
+            string sql = $"UPDATE `cars` SET `Date`='{date}' WHERE Id={id}";
+            MySqlCommand cmd = new MySqlCommand(sql, conn.Connection);
+            cmd.ExecuteNonQuery();
+
+
+            conn.Connection.Close();
+        }
         static void Main(string[] args)
         {
             feltolt();
@@ -93,7 +111,7 @@ namespace Cars
 
             }
 
-            
+            updateCar();
 
         }
     }
