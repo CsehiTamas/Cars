@@ -33,7 +33,7 @@ namespace Cars
         }
 
     }
-    
+
     public class Program
     {
         public static connect conn = new connect();
@@ -42,7 +42,7 @@ namespace Cars
         {
             conn.Connection.Open();
             string sql = "SELECT * FROM `cars`";
-            MySqlCommand cmd = new MySqlCommand(sql,conn.Connection);
+            MySqlCommand cmd = new MySqlCommand(sql, conn.Connection);
             MySqlDataReader reader = cmd.ExecuteReader();
             reader.Read();
             do
@@ -55,11 +55,11 @@ namespace Cars
                 car.Date = reader.GetInt32(4);
                 cars.Add(car);
             } while (reader.Read());
-            
+
 
             conn.Connection.Close();
         }
-        public static void addNewCar() 
+        public static void addNewCar()
         {
             conn.Connection.Open();
 
@@ -80,11 +80,12 @@ namespace Cars
             string sql = $"INSERT INTO `cars`(`Brand`, `Type`, `License`, `Date`) VALUES('{brand}', '{type}', '{license}',{date})";
             MySqlCommand cmd = new MySqlCommand(sql, conn.Connection);
             cmd.ExecuteNonQuery();
-            
+
 
             conn.Connection.Close();
         }
-        public static void updateCar() {
+        public static void updateCar() 
+        {
             conn.Connection.Open();
 
             int date, id;
@@ -117,6 +118,21 @@ namespace Cars
 
             conn.Connection.Close();
         }
+        public static void CarById() 
+        {
+            conn.Connection.Open();
+
+            Console.Write("Kérem az autó azonosítóját: ");
+            int id = int.Parse(Console.ReadLine());
+            string sql = $"SELECT * FROM `cars` WHERE `Id` = {id}";
+            MySqlCommand cmd = new MySqlCommand(sql, conn.Connection);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            Console.WriteLine($"\nMárka: {reader.GetString(1)}\nTípus: {reader.GetString(2)}\nMotorszám: {reader.GetString(3)}\nGyártási év: {reader.GetInt32(4)}");
+
+            conn.Connection.Close();
+        }
+
         static void Main(string[] args)
         {
             feltolt();
